@@ -1,7 +1,6 @@
-![Build Status](https://ci.appveyor.com/api/projects/status/2w2e1oa30glhatvc?svg=true)
 
-# DavisVantage.WeatherReader
-Davis Vantage WeatherReader is a **crossplatform** [.netcore](https://www.microsoft.com/net/core) application that reads weather data from a Davis Vantage weatherstation. It follows the official Vantage Pro, Pro2, and Vue Communications Reference which can be downloaded at [http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/](http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/)
+# DavisVantage.WeatherReader [![Build status](https://ci.appveyor.com/api/projects/status/2w2e1oa30glhatvc/branch/master?svg=true)](https://ci.appveyor.com/project/mkeymolen/davisvantage-weatherreader/branch/master)
+Davis Vantage WeatherReader is a **crossplatform** [.netcore](https://www.microsoft.com/net/core) library that reads weather data from a Davis Vantage weatherstation. It follows the official Vantage Pro, Pro2, and Vue Communications Reference which can be downloaded at [http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/](http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/)
 
 ###IMPORTANT NOTE###
 
