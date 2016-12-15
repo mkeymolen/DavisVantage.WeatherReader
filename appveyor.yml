@@ -2,5 +2,9 @@
 version: 1.0.0-prerelease.{build}
 before_build:
 - appveyor-retry dotnet restore -v Minimal
-init:
-- ps: $Env:LABEL = $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")               
+build_script:
+- dotnet build "src\DavisVantage.WeatherReader" --no-dependencies --version-suffix {version} 
+test_script:
+- dotnet test "test\DavisVantage.WeatherReader.Tests"
+cache:
+- '%USERPROFILE%\.nuget\packages'
