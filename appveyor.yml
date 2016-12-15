@@ -3,7 +3,7 @@ version: 1.0.0-prerelease.{build}
 before_build:
 - appveyor-retry dotnet restore -v Minimal
 init:
-- ps: $Env:prerelease = prerelease.{build}
+- ps: $Env:prerelease = "prerelease." + {build}
 build_script:
 - dotnet build "src\DavisVantage.WeatherReader" --no-dependencies --version %prerelease%
 test_script:
