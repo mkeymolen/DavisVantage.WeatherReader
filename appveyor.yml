@@ -6,6 +6,7 @@ init:
 - ps: $Env:prerelease = "prerelease." + $Env:APPVEYOR_BUILD_NUMBER
 build_script:
 - dotnet build "src\DavisVantage.WeatherReader" --no-dependencies --version-suffix %prerelease%
+- dotnet build "test\DavisVantage.WeatherReader.Sample" --no-dependencies --version-suffix %prerelease%
 test_script:
 - dotnet test "test\DavisVantage.WeatherReader.Tests"
 cache:
