@@ -3,6 +3,9 @@
   "version": 2,
   "targets": {
     ".NETStandard,Version=v1.6": {
+      "LibLog/4.2.6": {
+        "type": "package"
+      },
       "Microsoft.NETCore.Platforms/1.1.0": {
         "type": "package",
         "compile": {
@@ -1199,6 +1202,16 @@
     }
   },
   "libraries": {
+    "LibLog/4.2.6": {
+      "sha512": "z2pUqnrQhd8ti2jsjLVCVlNC5rqynGZvnZtd5Q1OJ0SCUH7WDYS+2fRJWWkTPBwWjdk0qMJA8GO0CIt6hWcDig==",
+      "type": "package",
+      "path": "LibLog/4.2.6",
+      "files": [
+        "LibLog.4.2.6.nupkg.sha512",
+        "LibLog.nuspec",
+        "content/App_Packages/LibLog.4.2/LibLog.cs.pp"
+      ]
+    },
     "Microsoft.NETCore.Platforms/1.1.0": {
       "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
@@ -4325,6 +4338,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
+      "LibLog >= 4.2.6",
       "NETStandard.Library >= 1.6.1"
     ],
     ".NETStandard,Version=v1.6": []

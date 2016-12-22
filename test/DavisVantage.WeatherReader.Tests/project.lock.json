@@ -32,6 +32,9 @@
           "lib/netstandard1.3/FluentAssertions.dll": {}
         }
       },
+      "LibLog/4.2.6": {
+        "type": "package"
+      },
       "Libuv/1.9.0": {
         "type": "package",
         "dependencies": {
@@ -2637,6 +2640,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
+          "LibLog": "4.2.6",
           "NETStandard.Library": "1.6.1"
         },
         "compile": {
@@ -2676,6 +2680,9 @@
           "lib/netstandard1.3/FluentAssertions.Core.dll": {},
           "lib/netstandard1.3/FluentAssertions.dll": {}
         }
+      },
+      "LibLog/4.2.6": {
+        "type": "package"
       },
       "Libuv/1.9.0": {
         "type": "package",
@@ -5419,6 +5426,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
+          "LibLog": "4.2.6",
           "NETStandard.Library": "1.6.1"
         },
         "compile": {
@@ -5540,6 +5548,16 @@
         "lib/wpa81/FluentAssertions.pdb",
         "lib/wpa81/FluentAssertions.pri",
         "lib/wpa81/FluentAssertions.xml"
+      ]
+    },
+    "LibLog/4.2.6": {
+      "sha512": "z2pUqnrQhd8ti2jsjLVCVlNC5rqynGZvnZtd5Q1OJ0SCUH7WDYS+2fRJWWkTPBwWjdk0qMJA8GO0CIt6hWcDig==",
+      "type": "package",
+      "path": "LibLog/4.2.6",
+      "files": [
+        "LibLog.4.2.6.nupkg.sha512",
+        "LibLog.nuspec",
+        "content/App_Packages/LibLog.4.2/LibLog.cs.pp"
       ]
     },
     "Libuv/1.9.0": {
