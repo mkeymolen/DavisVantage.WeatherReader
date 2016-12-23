@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Threading.Tasks;
 using DavisVantage.WeatherReader.Logging;
+using Polly;
 
 namespace DavisVantage.WeatherReader.WeatherLinkIp
 {
@@ -30,15 +31,26 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             {
                 const byte NEWLINECHAR = 10;
                 var networkStream = _tcpClient.GetStream();
-                networkStream.WriteByte(NEWLINECHAR);
+                var dataAvailable = RetryPolicies.WakeUpPolicy.Execute(() =>
+                {
+                    s_logger.Info("Trying to wake up the console");
+                    networkStream.WriteByte(NEWLINECHAR);
+                    return networkStream.DataAvailable;
+                });
 
+                if (dataAvailable)
+                {
+                    s_logger.Info("Console has been woken up succesfully!");
+                }
+                else
+                {
+                    s_logger.Warn("Could not initiate wake up call");
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                s_logger.ErrorException("Could not initiate wake up call", ex);
             }
-
         }
 
         public Task ReadCurrentWeather()

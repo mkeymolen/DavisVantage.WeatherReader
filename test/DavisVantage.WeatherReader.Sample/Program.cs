@@ -9,6 +9,10 @@ namespace DavisVantage.WeatherReader.Sample
     {
         public static void Main(string[] args)
         {
+            // connect to weatherstation
+            // read currentweatherdata
+            // read extremes
+            // weatherstation values
         }
     }
 }

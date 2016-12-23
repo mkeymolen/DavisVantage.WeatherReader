@@ -108,6 +108,18 @@
           "System.Xml.XDocument": "4.3.0"
         }
       },
+      "Polly/5.0.2-v5-0-alpha0001": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "lib/netstandard1.0/Polly.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/Polly.dll": {}
+        }
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
         "type": "package",
         "runtimeTargets": {
@@ -1440,6 +1452,21 @@
         "NETStandard.Library.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt"
+      ]
+    },
+    "Polly/5.0.2-v5-0-alpha0001": {
+      "sha512": "DNAVUDvpu8+UFxOF5KPwoGRfdmEkpjUvnpAIfMnUMmaqRP328IZe7/l7R0eBYLZhPghzaNYOjZ67iWqewENTlA==",
+      "type": "package",
+      "path": "Polly/5.0.2-v5-0-alpha0001",
+      "files": [
+        "Polly.5.0.2-v5-0-alpha0001.nupkg.sha512",
+        "Polly.nuspec",
+        "lib/net45/Polly.XML",
+        "lib/net45/Polly.dll",
+        "lib/net45/Polly.pdb",
+        "lib/netstandard1.0/Polly.XML",
+        "lib/netstandard1.0/Polly.dll",
+        "lib/netstandard1.0/Polly.pdb"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -4634,6 +4661,7 @@
     "": [
       "Microsoft.CSharp >= 4.3.0",
       "NETStandard.Library >= 1.6.1",
+      "Polly >= 5.0.2-v5-0-alpha0001",
       "System.Diagnostics.StackTrace >= 4.3.0",
       "System.Diagnostics.Tools >= 4.3.0",
       "System.Dynamic.Runtime >= 4.3.0",

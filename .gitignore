@@ -3,3 +3,8 @@
 ################################################################################
 
 /DavisVantage.WeatherReader/obj/Debug/netstandard1.6
+/DavisVantage.WeatherReader/bin/Debug/netstandard1.6
+/test/DavisVantage.WeatherReader.Sample/bin/Debug/netcoreapp1.0
+/test/DavisVantage.WeatherReader.Sample/obj/Debug/netcoreapp1.0
+/test/DavisVantage.WeatherReader.Tests/bin/Debug/netcoreapp1.0/win81-x64
+/test/DavisVantage.WeatherReader.Tests/obj/Debug/netcoreapp1.0
