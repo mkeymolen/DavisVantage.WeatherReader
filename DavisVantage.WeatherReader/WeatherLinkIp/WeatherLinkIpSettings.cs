@@ -2,7 +2,12 @@
 {
     public class WeatherLinkIpSettings : IDataLoggerSettings
     {
-        public string IpAddress { get; set; }
-        public int Port { get; set; }
+        public WeatherLinkIpSettings(string ipAddress, int port)
+        {
+            IpAddress = ipAddress;
+            Port = port;
+        }
+        public string IpAddress { get;}
+        public int Port { get;}
     }
 }

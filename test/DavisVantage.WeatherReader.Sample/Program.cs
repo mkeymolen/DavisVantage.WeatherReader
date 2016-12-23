@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DavisVantage.WeatherReader.WeatherLinkIp;
 
 namespace DavisVantage.WeatherReader.Sample
 {
@@ -9,7 +10,12 @@ namespace DavisVantage.WeatherReader.Sample
     {
         public static void Main(string[] args)
         {
-            // connect to weatherstation
+            var dataloggerSettings = new WeatherLinkIpSettings("192.168.1.140",22222);
+            using (var datalogger = new WeatherLinkIpDataLogger())
+            {
+                datalogger.Connect(dataloggerSettings);
+                datalogger.WakeUp();
+            } 
             // read currentweatherdata
             // read extremes
             // weatherstation values
