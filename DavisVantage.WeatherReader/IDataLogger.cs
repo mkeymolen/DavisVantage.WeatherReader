@@ -1,12 +1,13 @@
 ﻿using System.Threading.Tasks;
+using DavisVantage.WeatherReader.Models;
 
 namespace DavisVantage.WeatherReader
 {
     public interface IDataLogger<in T> where T : IDataLoggerSettings
     {
-        void Connect(T settings);
-        void WakeUp();
-        Task ReadCurrentWeather();
-        Task ReadDayExtremes();
+        bool Connect(T settings);
+        bool WakeUp();
+        CurrentWeather ReadCurrentWeather();
+        void ReadDayExtremes();
     }
 }
