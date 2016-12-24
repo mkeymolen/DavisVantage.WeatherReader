@@ -9,7 +9,7 @@
       "type": "platform",
       "version": "1.1.0"
     },
-    "DavisVantage.WeatherReader": "1.0.0",
+    "DavisVantage.WeatherReader": "1.0.0-*",
     "NLog.Extensions.Logging": "1.0.0-rtm-alpha5"
   },
 

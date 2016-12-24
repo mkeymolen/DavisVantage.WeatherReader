@@ -1,13 +1,13 @@
 # version format
-version: 1.0.0-prerelease.{build}
+version: 1.0.0-alpha.{build}
+branches:
+  only:
+  - master
+pull_requests:
+  do_not_increment_build_number: true
 before_build:
 - appveyor-retry dotnet restore -v Minimal
-init:
-- ps: $Env:prerelease = "prerelease." + $Env:APPVEYOR_BUILD_NUMBER
 build_script:
-- dotnet build "src\DavisVantage.WeatherReader" --no-dependencies --version-suffix %prerelease%
-- dotnet build "test\DavisVantage.WeatherReader.Sample" --no-dependencies --version-suffix %prerelease%
+- ps: .\build\build.ps1 $env:APPVEYOR_BUILD_VERSION
 test_script:
 - dotnet test "test\DavisVantage.WeatherReader.Tests"
-cache:
-- '%USERPROFILE%\.nuget\packages'
