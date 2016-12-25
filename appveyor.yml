@@ -5,8 +5,6 @@ branches:
   - master
 pull_requests:
   do_not_increment_build_number: true
-before_build:
-- appveyor-retry dotnet restore -v Minimal
 build_script:
 - ps: .\build\build.ps1 $env:APPVEYOR_BUILD_VERSION
 test_script:

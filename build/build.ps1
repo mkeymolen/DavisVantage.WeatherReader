@@ -7,4 +7,5 @@ Get-ChildItem -Path $PSScriptRoot\..\src -Filter project.json -Recurse | ForEach
 	    -replace "(?<=`"version`":\s`")[.\w-]*(?=`",)", "$BuildVersionNumber" |
 	        sc -Path $ProjectJsonPath -Encoding UTF8
 }
-dotnet build "src\DavisVantage.WeatherReader" --version-suffix $BuildVersionNumber
+dotnet restore "src\DavisVantage.WeatherReader"
+dotnet pack "src\DavisVantage.WeatherReader" --version-suffix $BuildVersionNumber
