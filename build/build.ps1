@@ -4,10 +4,10 @@ param (
 )
 
 if ($TagVersionNumber){
-	Write-Host "TagVersion" + $TagVersionNumber
+	Write-Host "TagVersion: $TagVersionNumber"
 }
 else{
-	Write-Host "Version: " + $BuildVersionNumber
+	Write-Host "Version: $BuildVersionNumber"
 }
 Get-ChildItem -Path $PSScriptRoot\..\src -Filter project.json -Recurse | ForEach-Object{ 
     $ProjectJsonPath =  $_.FullName
@@ -22,4 +22,4 @@ Get-ChildItem -Path $PSScriptRoot\..\src -Filter project.json -Recurse | ForEach
 	            sc -Path $ProjectJsonPath -Encoding UTF8
     }
 }
-dotnet pack $PSScriptRoot\..\src\DavisVantage.WeatherReader
+dotnet pack "$PSScriptRoot\..\src\DavisVantage.WeatherReader"
