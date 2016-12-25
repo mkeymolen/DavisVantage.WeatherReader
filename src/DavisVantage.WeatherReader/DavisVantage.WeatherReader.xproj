@@ -7,7 +7,7 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>162429ac-f4ff-49fb-952a-d5f48d312056</ProjectGuid>
+    <ProjectGuid>0a66214d-c2ea-48e2-9a1e-dd0a2337a01d</ProjectGuid>
     <RootNamespace>DavisVantage.WeatherReader</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>

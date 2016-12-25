@@ -239,3 +239,4 @@ _Pvt_Extensions
 /build/1
 
 #My Custom ignored files/folder
+*.txt

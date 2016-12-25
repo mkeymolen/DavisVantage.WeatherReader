@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6461C443-B
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DavisVantage.WeatherReader.Tests", "test\DavisVantage.WeatherReader.Tests\DavisVantage.WeatherReader.Tests.xproj", "{178E4973-FC75-4741-A054-0B964CA0DBCB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DavisVantage.WeatherReader", "DavisVantage.WeatherReader\DavisVantage.WeatherReader.xproj", "{0A66214D-C2EA-48E2-9A1E-DD0A2337A01D}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DavisVantage.WeatherReader", "src\DavisVantage.WeatherReader\DavisVantage.WeatherReader.xproj", "{0A66214D-C2EA-48E2-9A1E-DD0A2337A01D}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DavisVantage.WeatherReader.Sample", "sample\DavisVantage.WeatherReader.Sample\DavisVantage.WeatherReader.Sample.xproj", "{AAA64FA2-DA2E-4D34-8FA7-3BB18F256C13}"
 EndProject

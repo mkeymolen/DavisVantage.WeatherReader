@@ -11609,8 +11609,8 @@
     },
     "DavisVantage.WeatherReader/1.0.0": {
       "type": "project",
-      "path": "../../DavisVantage.WeatherReader/project.json",
-      "msbuildProject": "../../DavisVantage.WeatherReader/DavisVantage.WeatherReader.xproj"
+      "path": "../../src/DavisVantage.WeatherReader/project.json",
+      "msbuildProject": "../../src/DavisVantage.WeatherReader/DavisVantage.WeatherReader.xproj"
     }
   },
   "projectFileDependencyGroups": {
