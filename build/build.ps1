@@ -22,4 +22,5 @@ Get-ChildItem -Path $PSScriptRoot\..\src -Filter project.json -Recurse | ForEach
 	            sc -Path $ProjectJsonPath -Encoding UTF8
     }
 }
+dotnet build "$PSScriptRoot\..\sample\DavisVantage.WeatherReader.Sample"
 dotnet pack "$PSScriptRoot\..\src\DavisVantage.WeatherReader"
