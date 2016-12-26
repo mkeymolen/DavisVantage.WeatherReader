@@ -116,6 +116,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
         private CurrentWeather GetCurrentWeatherFromBytes(byte[] dataBuffer, bool valueInMetric)
         {
             var currentWeather = new CurrentWeather();
+            currentWeather.UtcTime = DateTime.UtcNow;
             var barometerFromDataBuffer = (float) BitConverter.ToInt16(dataBuffer, 7) / 1000;
             currentWeather.Barometer = valueInMetric ? MetricConversion.InHgTohPa(barometerFromDataBuffer) : Convert.ToInt32(barometerFromDataBuffer);
             var tempInsideFromDataBuffer = (float)BitConverter.ToInt16(dataBuffer, 9) / 10;
@@ -132,7 +133,21 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             currentWeather.SoilTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 25, 4, valueInMetric);
             currentWeather.LeafTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 29, 4, valueInMetric);
             currentWeather.HumidityOutside = Convert.ToInt32(dataBuffer[33]);
-            currentWeather.ExtraHumidities = GetExtraHumiditiesFromBuffer(dataBuffer);
+            currentWeather.ExtraHumidities = GetListValuesFromBuffer(dataBuffer,34,7);
+            var rainRateTicks = (float)BitConverter.ToInt16(dataBuffer, 41);
+            currentWeather.RainRate = valueInMetric ? Convert.ToDecimal(rainRateTicks / 5) : Convert.ToDecimal(rainRateTicks/100);
+            currentWeather.UvIndex = Convert.ToInt32(dataBuffer[43]);
+            currentWeather.SolarRadiation = BitConverter.ToInt16(dataBuffer, 44);
+            var stormRainTicks = (float)BitConverter.ToInt16(dataBuffer, 46);
+            currentWeather.StormRain = valueInMetric ? Convert.ToDecimal(stormRainTicks / 5) : Convert.ToDecimal(stormRainTicks / 100);
+            var rainToday = (float)BitConverter.ToInt16(dataBuffer, 50);
+            currentWeather.RainToday = valueInMetric ? Convert.ToDecimal(rainToday / 5) : Convert.ToDecimal(rainToday / 100);
+            currentWeather.SoilMoistures = GetListValuesFromBuffer(dataBuffer, 62, 4);
+            currentWeather.LeafWetnesses = GetListValuesFromBuffer(dataBuffer, 66, 4);
+            var sunriseValueFromDataBuffer = (float) BitConverter.ToInt16(dataBuffer, 91);
+            currentWeather.SunRise = currentWeather.UtcTime.Date.AddHours(Math.Floor(sunriseValueFromDataBuffer/100)).AddMinutes(sunriseValueFromDataBuffer%100);
+            var sunsetValueFromDataBuffer = (float)BitConverter.ToInt16(dataBuffer, 93);
+            currentWeather.SunSet = currentWeather.UtcTime.Date.AddHours(Math.Floor(sunsetValueFromDataBuffer / 100)).AddMinutes(sunsetValueFromDataBuffer % 100);
             return currentWeather;
         }
 
@@ -151,19 +166,19 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
             return extraTemperatures;
         }
-        private List<int> GetExtraHumiditiesFromBuffer(byte[] dataBuffer)
+        private List<int> GetListValuesFromBuffer(byte[] dataBuffer, int byteOffset, int byteLength)
         {
-            var extraHumidities = new List<int>();
-            for (var i = 34; i < 41; i++)
+            var listValues = new List<int>();
+            for (var i = byteOffset; i < byteOffset+ byteLength; i++)
             {
                 var byteValue = Convert.ToInt32(dataBuffer[i]);
                 // ignore max byte values --> no sensor
                 if (byteValue != byte.MaxValue)
                 {
-                    extraHumidities.Add(byteValue);
+                    listValues.Add(byteValue);
                 }
             }
-            return extraHumidities;
+            return listValues;
         }
     }
 }
