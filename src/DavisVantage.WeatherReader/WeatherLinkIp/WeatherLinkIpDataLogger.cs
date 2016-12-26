@@ -117,6 +117,11 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
         {
             var currentWeather = new CurrentWeather();
             currentWeather.UtcTime = DateTime.UtcNow;
+            currentWeather.ConsoleInfo = new ConsoleInfo()
+            {
+                IssBatteryStatus = Convert.ToInt32(dataBuffer[86]),
+                ConsoleBatteryVoltage = Math.Round(Convert.ToDecimal((float)BitConverter.ToInt16(dataBuffer, 87)*300/512/100.0),1)
+            };
             var barometerFromDataBuffer = (float) BitConverter.ToInt16(dataBuffer, 7) / 1000;
             currentWeather.Barometer = valueInMetric ? MetricConversion.InHgTohPa(barometerFromDataBuffer) : Convert.ToInt32(barometerFromDataBuffer);
             var tempInsideFromDataBuffer = (float)BitConverter.ToInt16(dataBuffer, 9) / 10;

@@ -8,6 +8,7 @@ namespace DavisVantage.WeatherReader.Models
     public class CurrentWeather
     {
         public DateTime UtcTime { get; set; }
+        public ConsoleInfo ConsoleInfo { get; set; }
         public int Barometer { get; set; }
         public decimal TempInside { get; set; }
         public decimal TempOutside { get; set; }
