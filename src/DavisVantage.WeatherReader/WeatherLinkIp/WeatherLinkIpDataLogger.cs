@@ -130,6 +130,9 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             currentWeather.WindDirectionDegrees = BitConverter.ToInt16(dataBuffer, 16);
             currentWeather.ExtraTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 18, 7, valueInMetric);
             currentWeather.SoilTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 25, 4, valueInMetric);
+            currentWeather.LeafTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 29, 4, valueInMetric);
+            currentWeather.HumidityOutside = Convert.ToInt32(dataBuffer[33]);
+            currentWeather.ExtraHumidities = GetExtraHumiditiesFromBuffer(dataBuffer);
             return currentWeather;
         }
 
@@ -147,6 +150,20 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                 }
             }
             return extraTemperatures;
+        }
+        private List<int> GetExtraHumiditiesFromBuffer(byte[] dataBuffer)
+        {
+            var extraHumidities = new List<int>();
+            for (var i = 34; i < 41; i++)
+            {
+                var byteValue = Convert.ToInt32(dataBuffer[i]);
+                // ignore max byte values --> no sensor
+                if (byteValue != byte.MaxValue)
+                {
+                    extraHumidities.Add(byteValue);
+                }
+            }
+            return extraHumidities;
         }
     }
 }
