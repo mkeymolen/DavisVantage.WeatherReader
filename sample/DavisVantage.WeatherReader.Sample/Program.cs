@@ -18,12 +18,8 @@ namespace DavisVantage.WeatherReader.Sample
             {
                 if (datalogger.Connect(dataloggerSettings))
                 {
-                    var consoleWokenUp = datalogger.WakeUp();
-                    if (consoleWokenUp)
-                    {
-                        var currentWeather = datalogger.ReadCurrentWeather();
-                        s_logger.Info(currentWeather);
-                    }
+                    var currentWeather = datalogger.ReadCurrentWeather();
+                    s_logger.Info(currentWeather);
                 }
                 else
                 {

@@ -6,7 +6,7 @@ namespace DavisVantage.WeatherReader
     public interface IDataLogger<in T> where T : IDataLoggerSettings
     {
         bool Connect(T settings);
-        bool WakeUp();
+        void WakeUp();
         CurrentWeather ReadCurrentWeather();
         void ReadDayExtremes();
     }

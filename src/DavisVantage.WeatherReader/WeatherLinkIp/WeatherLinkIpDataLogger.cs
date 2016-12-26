@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using DavisVantage.WeatherReader.Logging;
 using DavisVantage.WeatherReader.Models;
-using Polly;
 
 namespace DavisVantage.WeatherReader.WeatherLinkIp
 {
@@ -14,6 +11,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
     {
         private TcpClient _tcpClient;
         private static readonly ILog s_logger = LogProvider.For<WeatherLinkIpDataLogger>();
+        private bool _consoleWokenUp;
 
         public bool Connect(WeatherLinkIpSettings settings)
         {
@@ -31,7 +29,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             
         }
 
-        public bool WakeUp()
+        public void WakeUp()
         {
             try
             {
@@ -46,17 +44,17 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
 
                 if (dataAvailable)
                 {
+                    _consoleWokenUp = true;
                     s_logger.Info("Console has been woken up succesfully!");
-                    return true;
                 }
-
-                s_logger.Warn("Could not initiate wake up call");
-                return false;
+                else
+                {
+                    s_logger.Warn("Could not initiate wake up call. Response from Console was empty.");
+                }
             }
             catch (Exception ex)
             {
                 s_logger.ErrorException("Could not initiate wake up call", ex);
-                return false;
             }
         }
 
@@ -64,6 +62,10 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
         {
             try
             {
+                if (!_consoleWokenUp)
+                {
+                    WakeUp();
+                }
                 const string COMMAND = "LOOP 1\n";
                 var commandInBytes = Encoding.ASCII.GetBytes(COMMAND);
 
@@ -71,11 +73,11 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                 networkStream.Write(commandInBytes, 0, commandInBytes.Length);
                 if (networkStream.DataAvailable)
                 {
-                    StartAfterAckResponse(networkStream);                 
+                    ReadUntilAckByte(networkStream);                 
                     var dataBuffer = new byte[99];
                     networkStream.Read(dataBuffer, 0, dataBuffer.Length);
 
-                    return ReadCurrentWeatherFromBuffer(dataBuffer);
+                    return GetCurrentWeatherFromBytes(dataBuffer);
                 }
                 s_logger.Warn("Could not read current weather data");
                 return null;
@@ -87,21 +89,40 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
         }
 
-        private CurrentWeather ReadCurrentWeatherFromBuffer(byte[] dataBuffer)
+        private CurrentWeather GetCurrentWeatherFromBytes(byte[] dataBuffer)
         {
-            var currentWeather = new CurrentWeather();
-            currentWeather.Barometer = MetricConversion.InHgTohPa((float)BitConverter.ToInt16(dataBuffer, 7) / 1000);
-            currentWeather.TempInside = MetricConversion.FahrenheitToDegrees((float)BitConverter.ToInt16(dataBuffer, 9) / 10);
-            currentWeather.HumidityInside = Convert.ToInt32(dataBuffer[11]);
-            currentWeather.TempOutside = MetricConversion.FahrenheitToDegrees((float)BitConverter.ToInt16(dataBuffer, 12) / 10);
-            currentWeather.WindSpeed = MetricConversion.MphToKph(Convert.ToInt32(dataBuffer[14]));
-            currentWeather.WindSpeed10Min = MetricConversion.MphToKph(Convert.ToInt32(dataBuffer[15]));
-            currentWeather.WindDirectionDegrees = BitConverter.ToInt16(dataBuffer, 16);
+            var currentWeather = new CurrentWeather
+            {
+                Barometer = MetricConversion.InHgTohPa((float) BitConverter.ToInt16(dataBuffer, 7) / 1000),
+                TempInside = MetricConversion.FahrenheitToDegrees((float) BitConverter.ToInt16(dataBuffer, 9) / 10),
+                HumidityInside = Convert.ToInt32(dataBuffer[11]),
+                TempOutside = MetricConversion.FahrenheitToDegrees((float) BitConverter.ToInt16(dataBuffer, 12) / 10),
+                WindSpeed = MetricConversion.MphToKph(Convert.ToInt32(dataBuffer[14])),
+                WindSpeed10Min = MetricConversion.MphToKph(Convert.ToInt32(dataBuffer[15])),
+                WindDirectionDegrees = BitConverter.ToInt16(dataBuffer, 16),
+                ExtraTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 18,7),
+                SoilTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer,25,4)
+            };
 
             return currentWeather;
         }
 
-        private void StartAfterAckResponse(NetworkStream networkStream)
+        private List<decimal> GetExtraTemperaturesFromBuffer(byte[] dataBuffer, int byteOffset, int byteLength)
+        {
+            var extraTemperatures = new List<decimal>();
+            for (var i = byteOffset; i < byteOffset + byteLength; i++)
+            {
+                var byteValue = Convert.ToInt32(dataBuffer[i]);
+                // ignore max byte values --> no sensor
+                if (byteValue != byte.MaxValue)
+                {
+                    extraTemperatures.Add(MetricConversion.FahrenheitToDegrees(byteValue-90));
+                }
+            }
+            return extraTemperatures;
+        }
+
+        private void ReadUntilAckByte(NetworkStream networkStream)
         {
             const int ACK = 6;
             var ackFound = false;
@@ -123,6 +144,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             {
                 _tcpClient.Dispose();
             }
+            _consoleWokenUp = false;
         }
     }
 }
