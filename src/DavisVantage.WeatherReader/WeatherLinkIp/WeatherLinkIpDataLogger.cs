@@ -58,7 +58,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
         }
 
-        public CurrentWeather ReadCurrentWeather()
+        public CurrentWeather ReadCurrentWeather(bool valueInMetric)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                     var dataBuffer = new byte[99];
                     networkStream.Read(dataBuffer, 0, dataBuffer.Length);
 
-                    return GetCurrentWeatherFromBytes(dataBuffer);
+                    return GetCurrentWeatherFromBytes(dataBuffer, valueInMetric);
                 }
                 s_logger.Warn("Could not read current weather data");
                 return null;
@@ -89,37 +89,18 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
         }
 
-        private CurrentWeather GetCurrentWeatherFromBytes(byte[] dataBuffer)
+        public void ReadDayExtremes(bool valueInMetric)
         {
-            var currentWeather = new CurrentWeather
-            {
-                Barometer = MetricConversion.InHgTohPa((float) BitConverter.ToInt16(dataBuffer, 7) / 1000),
-                TempInside = MetricConversion.FahrenheitToDegrees((float) BitConverter.ToInt16(dataBuffer, 9) / 10),
-                HumidityInside = Convert.ToInt32(dataBuffer[11]),
-                TempOutside = MetricConversion.FahrenheitToDegrees((float) BitConverter.ToInt16(dataBuffer, 12) / 10),
-                WindSpeed = MetricConversion.MphToKph(Convert.ToInt32(dataBuffer[14])),
-                WindSpeed10Min = MetricConversion.MphToKph(Convert.ToInt32(dataBuffer[15])),
-                WindDirectionDegrees = BitConverter.ToInt16(dataBuffer, 16),
-                ExtraTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 18,7),
-                SoilTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer,25,4)
-            };
-
-            return currentWeather;
+            throw new NotImplementedException();
         }
 
-        private List<decimal> GetExtraTemperaturesFromBuffer(byte[] dataBuffer, int byteOffset, int byteLength)
+        public void Dispose()
         {
-            var extraTemperatures = new List<decimal>();
-            for (var i = byteOffset; i < byteOffset + byteLength; i++)
+            if (_tcpClient?.Connected ?? false)
             {
-                var byteValue = Convert.ToInt32(dataBuffer[i]);
-                // ignore max byte values --> no sensor
-                if (byteValue != byte.MaxValue)
-                {
-                    extraTemperatures.Add(MetricConversion.FahrenheitToDegrees(byteValue-90));
-                }
+                _tcpClient.Dispose();
             }
-            return extraTemperatures;
+            _consoleWokenUp = false;
         }
 
         private void ReadUntilAckByte(NetworkStream networkStream)
@@ -132,19 +113,40 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                 ackFound = (value == ACK);
             }
         }
-
-        public void ReadDayExtremes()
+        private CurrentWeather GetCurrentWeatherFromBytes(byte[] dataBuffer, bool valueInMetric)
         {
-            throw new NotImplementedException();
+            var currentWeather = new CurrentWeather();
+            var barometerFromDataBuffer = (float) BitConverter.ToInt16(dataBuffer, 7) / 1000;
+            currentWeather.Barometer = valueInMetric ? MetricConversion.InHgTohPa(barometerFromDataBuffer) : Convert.ToInt32(barometerFromDataBuffer);
+            var tempInsideFromDataBuffer = (float)BitConverter.ToInt16(dataBuffer, 9) / 10;
+            currentWeather.TempInside = valueInMetric ? MetricConversion.FahrenheitToDegrees(tempInsideFromDataBuffer) : Convert.ToDecimal(tempInsideFromDataBuffer);
+            currentWeather.HumidityInside = Convert.ToInt32(dataBuffer[11]);
+            var tempOutsideFromDataBuffer = (float)BitConverter.ToInt16(dataBuffer, 12) / 10;
+            currentWeather.TempOutside = valueInMetric ? MetricConversion.FahrenheitToDegrees(tempOutsideFromDataBuffer) : Convert.ToDecimal(tempOutsideFromDataBuffer);
+            var windSpeedFromDataBuffer = Convert.ToInt32(dataBuffer[14]);
+            currentWeather.WindSpeed = valueInMetric ? MetricConversion.MphToKph(windSpeedFromDataBuffer) : windSpeedFromDataBuffer;
+            windSpeedFromDataBuffer = Convert.ToInt32(dataBuffer[15]);
+            currentWeather.WindSpeed10Min = valueInMetric ? MetricConversion.MphToKph(windSpeedFromDataBuffer) : windSpeedFromDataBuffer;
+            currentWeather.WindDirectionDegrees = BitConverter.ToInt16(dataBuffer, 16);
+            currentWeather.ExtraTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 18, 7, valueInMetric);
+            currentWeather.SoilTemperatures = GetExtraTemperaturesFromBuffer(dataBuffer, 25, 4, valueInMetric);
+            return currentWeather;
         }
 
-        public void Dispose()
+        private List<decimal> GetExtraTemperaturesFromBuffer(byte[] dataBuffer, int byteOffset, int byteLength, bool valueInMetric)
         {
-            if (_tcpClient?.Connected ?? false)
+            var extraTemperatures = new List<decimal>();
+            for (var i = byteOffset; i < byteOffset + byteLength; i++)
             {
-                _tcpClient.Dispose();
+                var byteValue = Convert.ToInt32(dataBuffer[i]);
+                // ignore max byte values --> no sensor
+                if (byteValue != byte.MaxValue)
+                {
+                    var temperature = byteValue - 90;
+                    extraTemperatures.Add(valueInMetric ? MetricConversion.FahrenheitToDegrees(temperature) : temperature);
+                }
             }
-            _consoleWokenUp = false;
+            return extraTemperatures;
         }
     }
 }

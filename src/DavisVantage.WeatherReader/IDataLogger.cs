@@ -7,7 +7,7 @@ namespace DavisVantage.WeatherReader
     {
         bool Connect(T settings);
         void WakeUp();
-        CurrentWeather ReadCurrentWeather();
-        void ReadDayExtremes();
+        CurrentWeather ReadCurrentWeather(bool valueInMetric);
+        void ReadDayExtremes(bool valueInMetric);
     }
 }
