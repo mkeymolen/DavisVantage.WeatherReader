@@ -1,6 +1,6 @@
 
 # DavisVantage.WeatherReader [![Build status](https://ci.appveyor.com/api/projects/status/2w2e1oa30glhatvc/branch/master?svg=true)](https://ci.appveyor.com/project/mkeymolen/davisvantage-weatherreader/branch/master) [![NuGet](https://img.shields.io/nuget/vpre/DavisVantage.WeatherReader.svg)](https://www.nuget.org/packages/DavisVantage.WeatherReader/) [![license](https://img.shields.io/github/license/mkeymolen/DavisVantage.WeatherReader.svg)](https://github.com/mkeymolen/DavisVantage.WeatherReader/blob/master/LICENSE)
-Davis Vantage WeatherReader is a **crossplatform** [.netstandard 1.6](https://docs.microsoft.com/en-us/dotnet/articles/standard/library) library that reads weather data from a Davis Vantage weatherstation. It follows the official Vantage Pro, Pro2, and Vue Communications Reference which can be downloaded at [http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/](http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/)
+Davis Vantage WeatherReader is a **crossplatform** [.netstandard 1.6](https://docs.microsoft.com/en-us/dotnet/articles/standard/library) and .NETFramework 4.5.1 library that reads weather data from a Davis Vantage weatherstation. It follows the official Vantage Pro, Pro2, and Vue Communications Reference which can be downloaded at [http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/](http://www.davisnet.com/support/vantage-pro-pro2-and-vue-communications-reference/)
 
 ## What do you need?
 1. Davis Vantage Weatherstation with console

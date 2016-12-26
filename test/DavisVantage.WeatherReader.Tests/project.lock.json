@@ -2643,7 +2643,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "DavisVantage.WeatherReader/1.1.0-alpha": {
+      "DavisVantage.WeatherReader/1.2.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -5444,7 +5444,7 @@
           "lib/netstandard1.1/xunit.runner.utility.dotnet.dll": {}
         }
       },
-      "DavisVantage.WeatherReader/1.1.0-alpha": {
+      "DavisVantage.WeatherReader/1.2.0-alpha": {
         "type": "project",
         "framework": ".NETStandard,Version=v1.6",
         "dependencies": {
@@ -11607,7 +11607,7 @@
         "xunit.runner.utility.nuspec"
       ]
     },
-    "DavisVantage.WeatherReader/1.1.0-alpha": {
+    "DavisVantage.WeatherReader/1.2.0-alpha": {
       "type": "project",
       "path": "../../src/DavisVantage.WeatherReader/project.json",
       "msbuildProject": "../../src/DavisVantage.WeatherReader/DavisVantage.WeatherReader.xproj"
@@ -11615,7 +11615,7 @@
   },
   "projectFileDependencyGroups": {
     "": [
-      "DavisVantage.WeatherReader >= 1.1.0-*",
+      "DavisVantage.WeatherReader >= 1.2.0-*",
       "FluentAssertions >= 4.15.0",
       "dotnet-test-xunit >= 2.2.0-preview2-build1029",
       "xunit >= 2.2.0-beta3-build3402"

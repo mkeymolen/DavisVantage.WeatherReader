@@ -98,7 +98,11 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
         {
             if (_tcpClient?.Connected ?? false)
             {
-                _tcpClient.Dispose();
+#if NET451
+                _tcpClient.Close();
+                #else
+   _tcpClient.Dispose();
+#endif  
             }
             _consoleWokenUp = false;
         }
