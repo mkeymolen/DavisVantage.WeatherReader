@@ -12,7 +12,7 @@
   "packOptions": {
     "owners": [ "Michael Keymolen" ],
     "requireLicenseAcceptance": true,
-    "summary": "DavisVantage.WeatherReader reads weatherdata from a Davis Vantage weatherstation console",
+    "summary": "DavisVantage.WeatherReader reads weatherdata from a Davis Vantage weatherstation console. Can be used in .NET Framework  or .netcore applications",
     "tags": [ "Weatherstation", "Davis", "Vantage", "tcp", "temperature", "weatherdata" ],
     "projectUrl": "https://github.com/mkeymolen/DavisVantage.WeatherReader",
     "licenseUrl": "https://github.com/mkeymolen/DavisVantage.WeatherReader/blob/master/LICENSE",
