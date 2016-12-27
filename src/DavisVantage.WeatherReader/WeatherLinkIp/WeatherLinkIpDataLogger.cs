@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using DavisVantage.WeatherReader.Logging;
 using DavisVantage.WeatherReader.Models;
+using DavisVantage.WeatherReader.Models.Extremes;
 
 namespace DavisVantage.WeatherReader.WeatherLinkIp
 {
@@ -89,7 +90,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
         }
 
-        public void ReadDayExtremes(bool valueInMetric)
+        public WeatherExtremes ReadWeatherExtremes(bool valueInMetric)
         {
             throw new NotImplementedException();
         }
