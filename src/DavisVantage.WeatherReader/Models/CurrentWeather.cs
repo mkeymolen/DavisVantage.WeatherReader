@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
+using DavisVantage.WeatherReader.Extensions;
 
 namespace DavisVantage.WeatherReader.Models
 {
@@ -33,34 +32,7 @@ namespace DavisVantage.WeatherReader.Models
 
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder();
-            foreach (var property in typeof(CurrentWeather).GetRuntimeProperties())
-            {
-                if (property.PropertyType == typeof(List<decimal>))
-                {
-                    var extraValues = (List<decimal>)property.GetValue(this);
-                    PrintValues(property, ref stringBuilder, extraValues);
-                }
-                else if (property.PropertyType == typeof(List<int>))
-                {
-                    var extraValues = (List<int>)property.GetValue(this);
-                    PrintValues(property, ref stringBuilder, extraValues);
-                }
-                else
-                {
-                    stringBuilder.Append($"\n{property.Name}: {property.GetValue(this)}");
-                }
-
-            }
-            return stringBuilder.ToString();
-        }
-
-        private void PrintValues<T>(PropertyInfo propertyInfo, ref StringBuilder stringBuilder, List<T> extraValues)
-        {
-            for (var i = 0; i < extraValues.Count; i++)
-            {
-                stringBuilder.Append($"\n{propertyInfo.Name}[{i}]: {extraValues[i]}");
-            }
+            return this.PrintAllProperties();
         }
     }
 }

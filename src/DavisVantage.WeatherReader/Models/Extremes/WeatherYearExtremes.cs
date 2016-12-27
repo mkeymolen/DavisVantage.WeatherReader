@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DavisVantage.WeatherReader.Extensions;
 
 namespace DavisVantage.WeatherReader.Models.Extremes
 {
     public class WeatherYearExtremes
     {
+        public override string ToString()
+        {
+            return this.PrintAllProperties();
+        }
     }
 }

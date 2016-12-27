@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using DavisVantage.WeatherReader.Models;
+﻿using DavisVantage.WeatherReader.Models;
 using DavisVantage.WeatherReader.Models.Extremes;
 
 namespace DavisVantage.WeatherReader
@@ -15,19 +14,19 @@ namespace DavisVantage.WeatherReader
         /// <summary>
         /// WakeUp console. Not necessary to call this method seperately
         /// </summary>
-        void WakeUp();
+        bool WakeUp();
         /// <summary>
         /// Read current weather data from console
         /// </summary>
-        /// <param name="valueInMetric">Specify if returned values should be converted to metric or to keep imperial</param>
+        /// <param name="valuesInMetric">Specify if returned values should be converted to metric or to keep imperial</param>
         /// <returns>CurrentWeather object with ConsoleInfo included</returns>
-        CurrentWeather ReadCurrentWeather(bool valueInMetric);
+        CurrentWeather ReadCurrentWeather(bool valuesInMetric);
 
         /// <summary>
         /// Read extremes from console
         /// </summary>
-        /// <param name="valueInMetric">Specify if returned values should be converted to metric or to keep imperial</param>
+        /// <param name="valuesInMetric">Specify if returned values should be converted to metric or to keep imperial</param>
         /// <returns>WeatherExtremes object that includes day, month and year data</returns>
-        WeatherExtremes ReadWeatherExtremes(bool valueInMetric);
+        WeatherExtremes ReadWeatherExtremes(bool valuesInMetric);
     }
 }

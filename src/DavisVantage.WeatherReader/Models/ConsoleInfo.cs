@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DavisVantage.WeatherReader.Extensions;
 
 namespace DavisVantage.WeatherReader.Models
 {
@@ -14,12 +9,7 @@ namespace DavisVantage.WeatherReader.Models
 
         public override string ToString()
         {
-            var stringBuilder = new StringBuilder();
-            foreach (var property in typeof(ConsoleInfo).GetRuntimeProperties())
-            {
-                stringBuilder.Append($"\n{property.Name}: {property.GetValue(this)}");
-            }
-            return stringBuilder.ToString();
+            return this.PrintAllProperties();
         }
     }
 }
