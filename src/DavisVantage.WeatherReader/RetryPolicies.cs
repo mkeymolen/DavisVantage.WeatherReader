@@ -9,6 +9,6 @@ namespace DavisVantage.WeatherReader
         public static RetryPolicy<bool> WakeUpPolicy = Policy
                                                         .Handle<Exception>()
                                                         .OrResult(false)
-                                                        .WaitAndRetry(3, retryAttempt => TimeSpan.FromSeconds(2));
+                                                        .WaitAndRetry(3, retryAttempt => TimeSpan.FromSeconds(3));
     }
 }

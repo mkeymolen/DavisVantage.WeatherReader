@@ -147,6 +147,10 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             while (!ackFound)
             {
                 var value = networkStream.ReadByte();
+                if (value == -1)
+                {
+                    throw new Exception("Empty response from console");
+                }
                 ackFound = (value == ACK);
             }
         }
