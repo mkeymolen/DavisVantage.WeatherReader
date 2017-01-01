@@ -7,28 +7,36 @@ using DavisVantage.WeatherReader.Models.Extremes;
 
 namespace DavisVantage.WeatherReader.WeatherLinkIp
 {
-    public class WeatherLinkIpDataLogger : IDataLogger<WeatherLinkIpSettings>, IDisposable
+    public class WeatherLinkIpDataLogger : IDataLogger<WeatherLinkIpSettings>
     {
+
+        public WeatherLinkIpSettings Settings { get; set; }
         private readonly IByteReader _byteReader;
         private TcpClient _tcpClient;
         private static readonly ILog s_logger = LogProvider.For<WeatherLinkIpDataLogger>();
 
-        public WeatherLinkIpDataLogger(IByteReader byteReader)
+        public WeatherLinkIpDataLogger(IByteReader byteReader, IDataLoggerSettings settings)
         {
             _byteReader = byteReader;
+            Settings = settings as WeatherLinkIpSettings;
         }
 
-        public bool Connect(WeatherLinkIpSettings settings)
+        public bool Connect()
         {
             try
             {
+                if (Settings == null)
+                {
+                    s_logger.Warn("No connection could be established. Settings are empty.");
+                    return false;
+                }
                 _tcpClient = new TcpClient();
-                _tcpClient.ConnectAsync(settings.IpAddress, settings.Port).Wait();
+                _tcpClient.ConnectAsync(Settings.IpAddress, Settings.Port).Wait();
                 return _tcpClient.Connected;
             }
             catch (Exception)
             {
-               s_logger.Error($"Could not connect to {settings.IpAddress}:{settings.Port}");
+               s_logger.Error($"Could not connect to {Settings?.IpAddress}:{Settings?.Port}");
                 return false;
             }
             
@@ -60,7 +68,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
             catch (Exception ex)
             {
-                s_logger.ErrorException("Could not initiate wake up call", ex);
+                s_logger.ErrorException("Could not initiate wake up call. ", ex);
                 return false;
             }
         }
@@ -84,7 +92,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
 
                         return _byteReader.ReadCurrentWeatherFromByteArray(dataBuffer, valuesInMetric);
                     }
-                    s_logger.Warn("Could not read current weather data");
+                    s_logger.Warn("Could not read current weather data. No data available");
                 }
 
                 return null;
@@ -92,7 +100,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
             catch (Exception ex)
             {
-                s_logger.ErrorException("Could not read current weather data", ex);
+                s_logger.ErrorException("Could not read current weather data. ", ex);
                 return null;
             }
         }
@@ -116,14 +124,14 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
 
                         return _byteReader.ReadWeatherExtremesFromByteArray(dataBuffer, valuesInMetric);
                     }
-                    s_logger.Warn("Could not read weather extremes");
+                    s_logger.Warn("Could not read weather extremes. No data available");
                 }
                 
                 return null;
             }
             catch (Exception ex)
             {
-                s_logger.ErrorException("Could not read weather extremes", ex);
+                s_logger.ErrorException("Could not read weather extremes.", ex);
                 return null;
             }
         }

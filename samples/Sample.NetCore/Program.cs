@@ -11,9 +11,9 @@ namespace DavisVantage.WeatherReader.Sample
         {
             var dataloggerSettings = new WeatherLinkIpSettings("192.168.1.140", 22222);
             s_logger.Info("Started");
-            using (var datalogger = new WeatherLinkIpDataLogger(new WeatherLinkIpByteReader()))
+            using (var datalogger = new WeatherLinkIpDataLogger(new WeatherLinkIpByteReader(), dataloggerSettings))
             {
-                if (datalogger.Connect(dataloggerSettings))
+                if (datalogger.Connect())
                 {
                     var currentWeather = datalogger.ReadCurrentWeather(true);
                     s_logger.Info(currentWeather);

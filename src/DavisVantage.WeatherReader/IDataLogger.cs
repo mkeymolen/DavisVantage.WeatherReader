@@ -1,16 +1,17 @@
-﻿using DavisVantage.WeatherReader.Models;
+﻿using System;
+using DavisVantage.WeatherReader.Models;
 using DavisVantage.WeatherReader.Models.Extremes;
 
 namespace DavisVantage.WeatherReader
 {
-    public interface IDataLogger<in T> where T : IDataLoggerSettings
+    public interface IDataLogger<T> : IDisposable where T : IDataLoggerSettings
     {
+        T Settings { get; set; }
         /// <summary>
         /// Connect to Console
         /// </summary>
-        /// <param name="settings">dataloggersettings of type IDataLoggerSettings</param>
         /// <returns>Connection succeeded or not</returns>
-        bool Connect(T settings);
+        bool Connect();
         /// <summary>
         /// WakeUp console. Not necessary to call this method seperately
         /// </summary>

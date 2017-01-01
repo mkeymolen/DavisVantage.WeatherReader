@@ -10,5 +10,11 @@ Davis Vantage WeatherReader is a **crossplatform** [.netstandard 1.6](https://do
 
 -  [**Weatherlink** **IP** **Data** **logger**](http://www.davisnet.com/product/weatherlinkip-for-vantage-stations/)
 
-## Included sample
-The included sample works with a [**Weatherlink** **IP** **Data** **logger**](http://www.davisnet.com/product/weatherlinkip-for-vantage-stations/) and a [**Davis** **Vantage** **Pro2** **Plus**](http://www.davisnet.com/solution/vantage-pro2-plus/) weatherstation. 
+## Samples
+The included samples works with a [**Weatherlink** **IP** **Data** **logger**](http://www.davisnet.com/product/weatherlinkip-for-vantage-stations/) and a [**Davis** **Vantage** **Pro2** **Plus**](http://www.davisnet.com/solution/vantage-pro2-plus/) weatherstation. 
+### .netcore
+Using NLog for logging.
+
+### .netcore autofac
+Using NLog for logging and autofac as IOC container.
+Settings are read from appsettings.json
