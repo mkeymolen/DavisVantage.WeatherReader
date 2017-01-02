@@ -31,6 +31,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                     return false;
                 }
                 _tcpClient = new TcpClient();
+                // wait for connection
                 _tcpClient.ConnectAsync(Settings.IpAddress, Settings.Port).Wait();
                 return _tcpClient.Connected;
             }
@@ -83,6 +84,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                     var commandInBytes = Encoding.ASCII.GetBytes(COMMAND);
 
                     var networkStream = _tcpClient.GetStream();
+                    networkStream.ReadTimeout = 10000;
                     networkStream.Write(commandInBytes, 0, commandInBytes.Length);
                     if (networkStream.DataAvailable)
                     {
