@@ -1,5 +1,5 @@
 # version format
-version: 1.4.0-alpha.{build}
+version: 1.4.1-alpha.{build}
 branches:
   only:
   - master
