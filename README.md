@@ -14,6 +14,28 @@ Davis Vantage WeatherReader is a **crossplatform** [.netstandard 1.6](https://do
 
 -  [**Weatherlink** **IP** **Data** **logger**](http://www.davisnet.com/product/weatherlinkip-for-vantage-stations/)
 
+## How to use
+- Import the latest DavisVantage.WeatherReader package from **[nuget](https://www.nuget.org/packages/DavisVantage.WeatherReader/).** 
+- Register the the implementations with your preferred IOC container.
+
+Example with autofac:
+
+	builder.Register(c => weatherlinkIpSettings).As<IDataLoggerSettings>();	
+	builder.RegisterType<WeatherLinkIpByteReader>().As<IByteReader>();	
+	builder.RegisterType<WeatherLinkIpDataLogger>().As<IDataLogger<WeatherLinkIpSettings>>();	
+
+Connect to the console:
+
+    using (var dataLogger = scope.Resolve<IDataLogger<WeatherLinkIpSettings>>())
+    {
+    	if (dataLogger.Connect())
+    	{
+    		var currentWeather = dataLogger.ReadCurrentWeather(true);
+    		var weatherExtremes = dataLogger.ReadWeatherExtremes(true);
+    	}
+    }
+
+
 ## Samples
 The included samples are working with a [**Weatherlink** **IP** **Data** **logger**](http://www.davisnet.com/product/weatherlinkip-for-vantage-stations/) and a [**Davis** **Vantage** **Pro2** **Plus**](http://www.davisnet.com/solution/vantage-pro2-plus/) weatherstation. 
 ### .netcore sample

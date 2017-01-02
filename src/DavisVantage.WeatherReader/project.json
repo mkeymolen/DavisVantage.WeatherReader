@@ -3,16 +3,15 @@
   "Title": "DavisVantage.WeatherReader",
   "authors": [ "Michael Keymolen" ],
   "copyright": "Copyright 2016",
-  "description": "DavisVantage.WeatherReader reads weatherdata from a Davis Vantage weatherstation console",
+  "description": "DavisVantage.WeatherReader reads weatherdata from a Davis Vantage weatherstation console. Please find more information on how to use on our project site @ github",
   "buildOptions": {
-    "define": ["LIBLOG_PORTABLE"],
+    "define": [ "LIBLOG_PORTABLE" ],
     "optimize": true
-  }
-,
+  },
   "packOptions": {
     "owners": [ "Michael Keymolen" ],
     "requireLicenseAcceptance": true,
-    "summary": "DavisVantage.WeatherReader reads weatherdata from a Davis Vantage weatherstation console. Can be used in .NET Framework  or .netcore applications",
+    "summary": "DavisVantage.WeatherReader reads weatherdata from a Davis Vantage weatherstation console. Can be used in .NET Framework  or .netcore applications. Please find more information on how to use on our project site @ github",
     "tags": [ "Weatherstation", "Davis", "Vantage", "tcp", "temperature", "weatherdata" ],
     "projectUrl": "https://github.com/mkeymolen/DavisVantage.WeatherReader",
     "licenseUrl": "https://github.com/mkeymolen/DavisVantage.WeatherReader/blob/master/LICENSE",
@@ -21,7 +20,7 @@
       "url": "https://github.com/mkeymolen/DavisVantage.WeatherReader"
     }
   },
-    "frameworks": {
+  "frameworks": {
     "netstandard1.6": {
       "dependencies": {
         "Microsoft.CSharp": "4.3.0",
