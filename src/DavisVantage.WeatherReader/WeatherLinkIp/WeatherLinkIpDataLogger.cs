@@ -44,37 +44,6 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             
         }
 
-        public bool WakeUp()
-        {
-            try
-            {
-                const byte NEWLINECHAR = 10;
-                var networkStream = _tcpClient.GetStream();
-                var dataAvailable = RetryPolicies.WakeUpPolicy.Execute(() =>
-                {
-                    s_logger.Info("Trying to wake up the console");
-                    networkStream.WriteByte(NEWLINECHAR);
-                    return networkStream.DataAvailable;
-                });
-
-                if (dataAvailable)
-                {
-                    s_logger.Info("Console has been woken up succesfully!");
-                    return true;
-                }
-                else
-                {
-                    s_logger.Warn("Could not initiate wake up call. Response from Console was empty.");
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                s_logger.ErrorException("Could not initiate wake up call. ", ex);
-                return false;
-            }
-        }
-
         public async Task<CurrentWeather> ReadCurrentWeather(bool valuesInMetric)
         {
             try
@@ -148,6 +117,37 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                 #else
    _tcpClient.Dispose();
 #endif  
+            }
+        }
+
+        private bool WakeUp()
+        {
+            try
+            {
+                const byte NEWLINECHAR = 10;
+                var networkStream = _tcpClient.GetStream();
+                var dataAvailable = RetryPolicies.WakeUpPolicy.Execute(() =>
+                {
+                    s_logger.Info("Trying to wake up the console");
+                    networkStream.WriteByte(NEWLINECHAR);
+                    return networkStream.DataAvailable;
+                });
+
+                if (dataAvailable)
+                {
+                    s_logger.Info("Console has been woken up succesfully!");
+                    return true;
+                }
+                else
+                {
+                    s_logger.Warn("Could not initiate wake up call. Response from Console was empty.");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                s_logger.ErrorException("Could not initiate wake up call. ", ex);
+                return false;
             }
         }
 

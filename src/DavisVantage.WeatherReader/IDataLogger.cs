@@ -14,10 +14,6 @@ namespace DavisVantage.WeatherReader
         /// <returns>Connection succeeded or not</returns>
         bool Connect();
         /// <summary>
-        /// WakeUp console. Not necessary to call this method seperately
-        /// </summary>
-        bool WakeUp();
-        /// <summary>
         /// Read current weather data from console
         /// </summary>
         /// <param name="valuesInMetric">Specify if returned values should be converted to metric or to keep imperial</param>
