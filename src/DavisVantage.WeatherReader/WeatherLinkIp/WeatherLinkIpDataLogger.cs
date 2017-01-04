@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using DavisVantage.WeatherReader.Logging;
 using DavisVantage.WeatherReader.Models;
 using DavisVantage.WeatherReader.Models.Extremes;
@@ -74,7 +75,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
         }
 
-        public CurrentWeather ReadCurrentWeather(bool valuesInMetric)
+        public async Task<CurrentWeather> ReadCurrentWeather(bool valuesInMetric)
         {
             try
             {
@@ -92,7 +93,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                         var dataBuffer = new byte[99];
                         networkStream.Read(dataBuffer, 0, dataBuffer.Length);
 
-                        return _byteReader.ReadCurrentWeatherFromByteArray(dataBuffer, valuesInMetric);
+                        return await _byteReader.ReadCurrentWeatherFromByteArray(dataBuffer, valuesInMetric);
                     }
                     s_logger.Warn("Could not read current weather data. No data available");
                 }
@@ -107,7 +108,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             }
         }
 
-        public WeatherExtremes ReadWeatherExtremes(bool valuesInMetric)
+        public async Task<WeatherExtremes> ReadWeatherExtremes(bool valuesInMetric)
         {
             try
             {
@@ -124,7 +125,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                         var dataBuffer = new byte[438];
                         networkStream.Read(dataBuffer, 0, dataBuffer.Length);
 
-                        return _byteReader.ReadWeatherExtremesFromByteArray(dataBuffer, valuesInMetric);
+                        return await _byteReader.ReadWeatherExtremesFromByteArray(dataBuffer, valuesInMetric);
                     }
                     s_logger.Warn("Could not read weather extremes. No data available");
                 }

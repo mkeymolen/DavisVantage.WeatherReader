@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DavisVantage.WeatherReader.Models;
 using DavisVantage.WeatherReader.Models.Extremes;
 
@@ -21,13 +22,13 @@ namespace DavisVantage.WeatherReader
         /// </summary>
         /// <param name="valuesInMetric">Specify if returned values should be converted to metric or to keep imperial</param>
         /// <returns>CurrentWeather object with ConsoleInfo included</returns>
-        CurrentWeather ReadCurrentWeather(bool valuesInMetric);
+        Task<CurrentWeather> ReadCurrentWeather(bool valuesInMetric);
 
         /// <summary>
         /// Read extremes from console
         /// </summary>
         /// <param name="valuesInMetric">Specify if returned values should be converted to metric or to keep imperial</param>
         /// <returns>WeatherExtremes object that includes day, month and year data</returns>
-        WeatherExtremes ReadWeatherExtremes(bool valuesInMetric);
+        Task<WeatherExtremes> ReadWeatherExtremes(bool valuesInMetric);
     }
 }

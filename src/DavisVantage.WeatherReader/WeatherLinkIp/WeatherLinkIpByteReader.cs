@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DavisVantage.WeatherReader.Models;
 using DavisVantage.WeatherReader.Models.Extremes;
 
@@ -7,7 +8,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
 {
     public class WeatherLinkIpByteReader : IByteReader
     {
-        public CurrentWeather ReadCurrentWeatherFromByteArray(byte[] byteArray, bool valuesInMetric)
+        public Task<CurrentWeather> ReadCurrentWeatherFromByteArray(byte[] byteArray, bool valuesInMetric)
         {
             var currentWeather = new CurrentWeather();
             currentWeather.UtcTime = DateTime.UtcNow;
@@ -40,9 +41,9 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             currentWeather.LeafWetnesses = GetSingleByteValuesFromBuffer(byteArray, 66, 4);
             currentWeather.SunRise = GetDateTimeValue(byteArray, 91);
             currentWeather.SunSet = GetDateTimeValue(byteArray, 93);
-            return currentWeather;
+            return Task.FromResult(currentWeather);
         }
-        public WeatherExtremes ReadWeatherExtremesFromByteArray(byte[] byteArray, bool valuesInMetric)
+        public Task<WeatherExtremes> ReadWeatherExtremesFromByteArray(byte[] byteArray, bool valuesInMetric)
         {
             var weatherExtremes = new WeatherExtremes();
             var dailyExtremes = new WeatherDayExtremes();
@@ -70,8 +71,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             dailyExtremes.ThswMaxTime= GetDateTimeValue(byteArray, 97);
 
             weatherExtremes.WeatherDayExtremes = dailyExtremes;
-            return weatherExtremes;
-
+            return Task.FromResult(weatherExtremes);
         }
 
         private int GetBarometerValue(byte[] dataBuffer, int byteOffset, bool valueInMetric)
