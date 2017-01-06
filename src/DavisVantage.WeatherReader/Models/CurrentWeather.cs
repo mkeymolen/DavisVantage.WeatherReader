@@ -13,9 +13,9 @@ namespace DavisVantage.WeatherReader.Models
         public decimal TempOutside { get; set; }
         public int HumidityInside { get; set; }
         public int HumidityOutside { get; set; }
-        public int WindSpeed { get; set; }
-        public int WindSpeed10Min { get; set; }
-        public int WindDirectionDegrees { get; set; }
+        public int WindGust { get; set; }
+        public int Wind10MinutesAvg { get; set; }
+        public int WindDirection { get; set; }
         public List<decimal> ExtraTemperatures { get; set; }
         public List<decimal> SoilTemperatures { get; set; }
         public List<decimal> LeafTemperatures { get; set; }
@@ -25,7 +25,7 @@ namespace DavisVantage.WeatherReader.Models
         public decimal RainRate { get; set; }
         public decimal StormRain { get; set; }
         public decimal RainToday { get; set; }
-        public int UvIndex { get; set; }
+        public int Uv { get; set; }
         public int SolarRadiation { get; set; } // in watt/meter2
         public DateTime SunRise { get; set; }
         public DateTime SunSet { get; set; }

@@ -21,9 +21,9 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             currentWeather.TempInside = GetTemperatureValue(byteArray, 9, true);
             currentWeather.HumidityInside = Convert.ToInt32(byteArray[11]);
             currentWeather.TempOutside = GetTemperatureValue(byteArray, 12, true);
-            currentWeather.WindSpeed = GetWindSpeedValue(byteArray, 14, valuesInMetric);
-            currentWeather.WindSpeed10Min = GetWindSpeedValue(byteArray, 15, valuesInMetric);
-            currentWeather.WindDirectionDegrees = BitConverter.ToInt16(byteArray, 16);
+            currentWeather.WindGust = GetWindSpeedValue(byteArray, 14, valuesInMetric);
+            currentWeather.Wind10MinutesAvg = GetWindSpeedValue(byteArray, 15, valuesInMetric);
+            currentWeather.WindDirection = BitConverter.ToInt16(byteArray, 16);
             currentWeather.ExtraTemperatures = GetExtraTemperaturesFromBuffer(byteArray, 18, 7, valuesInMetric);
             currentWeather.SoilTemperatures = GetExtraTemperaturesFromBuffer(byteArray, 25, 4, valuesInMetric);
             currentWeather.LeafTemperatures = GetExtraTemperaturesFromBuffer(byteArray, 29, 4, valuesInMetric);
@@ -31,7 +31,7 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
             currentWeather.ExtraHumidities = GetSingleByteValuesFromBuffer(byteArray, 34, 7);
             var rainRateTicks = (float)BitConverter.ToInt16(byteArray, 41);
             currentWeather.RainRate = valuesInMetric ? Convert.ToDecimal(rainRateTicks / 5) : Convert.ToDecimal(rainRateTicks / 100);
-            currentWeather.UvIndex = Convert.ToInt32(byteArray[43]);
+            currentWeather.Uv = Convert.ToInt32(byteArray[43]);
             currentWeather.SolarRadiation = BitConverter.ToInt16(byteArray, 44);
             var stormRainTicks = (float)BitConverter.ToInt16(byteArray, 46);
             currentWeather.StormRain = valuesInMetric ? Convert.ToDecimal(stormRainTicks / 5) : Convert.ToDecimal(stormRainTicks / 100);
