@@ -19,9 +19,9 @@ namespace Sample.NetCore.Autofac
                     if (dataLogger.Connect())
                     {
                         var currentWeather = dataLogger.ReadCurrentWeather(true);
-                        s_logger.Info(currentWeather);
+                        s_logger.Info(currentWeather.Result);
                         var weatherExtremes = dataLogger.ReadWeatherExtremes(true);
-                        s_logger.Info(weatherExtremes);
+                        s_logger.Info(weatherExtremes.Result);
                     }
                     else
                     {

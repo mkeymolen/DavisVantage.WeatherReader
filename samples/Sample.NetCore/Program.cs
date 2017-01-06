@@ -16,9 +16,9 @@ namespace DavisVantage.WeatherReader.Sample
                 if (datalogger.Connect())
                 {
                     var currentWeather = datalogger.ReadCurrentWeather(true);
-                    s_logger.Info(currentWeather);
+                    s_logger.Info(currentWeather.Result);
                     var weatherExtremes = datalogger.ReadWeatherExtremes(true);
-                    s_logger.Info(weatherExtremes);
+                    s_logger.Info(weatherExtremes.Result);
                 }
                 else
                 {
