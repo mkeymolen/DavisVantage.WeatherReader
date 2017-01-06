@@ -46,31 +46,35 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
         public Task<WeatherExtremes> ReadWeatherExtremesFromByteArray(byte[] byteArray, bool valuesInMetric)
         {
             var weatherExtremes = new WeatherExtremes();
-            var dailyExtremes = new WeatherDayExtremes();
+            var dailyExtremes = new WeatherdayExtremes();
             dailyExtremes.BarometerMin = GetBarometerValue(byteArray, 0, valuesInMetric);
             dailyExtremes.BarometerMax = GetBarometerValue(byteArray, 2, valuesInMetric);
             dailyExtremes.BarometerMinTime = GetDateTimeValue(byteArray, 12);
             dailyExtremes.BarometerMaxTime = GetDateTimeValue(byteArray, 14);
             dailyExtremes.MaxWindSpeed = GetWindSpeedValue(byteArray, 16, valuesInMetric);
             dailyExtremes.MaxWindSpeedTime = GetDateTimeValue(byteArray, 17);
-            dailyExtremes.TempInsideMax = GetTemperatureValue(byteArray, 21, valuesInMetric);
-            dailyExtremes.TempInsideMin = GetTemperatureValue(byteArray, 23, valuesInMetric);
-            dailyExtremes.TempInsideMaxTime = GetDateTimeValue(byteArray, 25);
-            dailyExtremes.TempInsideMinTime = GetDateTimeValue(byteArray, 27);
+            dailyExtremes.MaxIndoorTemp = GetTemperatureValue(byteArray, 21, valuesInMetric);
+            dailyExtremes.MinIndoorTemp = GetTemperatureValue(byteArray, 23, valuesInMetric);
+            dailyExtremes.MaxIndoorTempTime = GetDateTimeValue(byteArray, 25);
+            dailyExtremes.MinIndoorTempTime = GetDateTimeValue(byteArray, 27);
             dailyExtremes.HumidityInsideMax = Convert.ToInt32(byteArray[37]);
             dailyExtremes.HumidityInsideMin = Convert.ToInt32(byteArray[38]);
             dailyExtremes.HumidityInsideMaxTime = GetDateTimeValue(byteArray, 39);
             dailyExtremes.HumidityInsideMinTime = GetDateTimeValue(byteArray, 41);
-            dailyExtremes.TempOutsideMax = GetTemperatureValue(byteArray, 49, valuesInMetric);
-            dailyExtremes.TempOutsideMin = GetTemperatureValue(byteArray, 47, valuesInMetric);
-            dailyExtremes.TempOutsideMaxTime = GetDateTimeValue(byteArray, 53);
-            dailyExtremes.TempOutsideMinTime = GetDateTimeValue(byteArray, 51);
+            dailyExtremes.MaxOutdoorTemp = GetTemperatureValue(byteArray, 49, valuesInMetric);
+            dailyExtremes.MinOutdoorTemp = GetTemperatureValue(byteArray, 47, valuesInMetric);
+            dailyExtremes.MaxOutdoorTempTime = GetDateTimeValue(byteArray, 53);
+            dailyExtremes.MinOutdoorTempTime = GetDateTimeValue(byteArray, 51);
             dailyExtremes.WindChillMin = GetTemperatureFromSignedBytes(byteArray, 79, valuesInMetric);
             dailyExtremes.WindChillMinTime = GetDateTimeValue(byteArray, 81);
             dailyExtremes.ThswMax = GetTemperatureFromSignedBytes(byteArray, 95, valuesInMetric);
             dailyExtremes.ThswMaxTime= GetDateTimeValue(byteArray, 97);
+            dailyExtremes.HighSolar = BitConverter.ToInt16(byteArray, 103);
+            dailyExtremes.HighSolarTime = GetDateTimeValue(byteArray, 105);
+            dailyExtremes.HighUv = Convert.ToInt32(byteArray[111]);
+            dailyExtremes.HighUvTime = GetDateTimeValue(byteArray, 112);
 
-            weatherExtremes.WeatherDayExtremes = dailyExtremes;
+            weatherExtremes.WeatherdayExtremes = dailyExtremes;
             return Task.FromResult(weatherExtremes);
         }
 
