@@ -86,6 +86,11 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
 
         private decimal GetTemperatureValue(byte[] dataBuffer, int byteOffset, bool valueInMetric)
         {
+            var consoleValue = BitConverter.ToInt16(dataBuffer, byteOffset);
+            if (consoleValue.Equals(short.MaxValue))
+            {
+                throw new Exception("Connection lost with ISS station");
+            }
             var tempFromDataBuffer = (float)BitConverter.ToInt16(dataBuffer, byteOffset) / 10;
             return valueInMetric ? MetricConversion.FahrenheitToDegrees(tempFromDataBuffer) : Convert.ToDecimal(tempFromDataBuffer);
         }
