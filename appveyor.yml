@@ -10,7 +10,7 @@ before_build:
 build_script:
 - ps: .\build\build.ps1 $env:APPVEYOR_BUILD_VERSION $env:APPVEYOR_REPO_TAG_NAME
 test_script:
-- dotnet test "test\DavisVantage.WeatherReader.Tests"
+- dotnet test ".\test\DavisVantage.WeatherReader.Tests\DavisVantage.WeatherReader.Tests.csproj"
 artifacts:
 - path: '**\*.nupkg'
 deploy:
