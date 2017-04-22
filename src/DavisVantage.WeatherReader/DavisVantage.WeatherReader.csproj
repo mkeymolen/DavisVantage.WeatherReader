@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>DavisVantage.WeatherReader reads weatherdata from a Davis Vantage weatherstation console. Please find more information on how to use on our project site @ github</Description>
     <Copyright>Copyright 2016</Copyright>
-    <VersionPrefix>1.6.1-alpha</VersionPrefix>
+    <VersionPrefix>1.6.2-alpha</VersionPrefix>
     <Authors>Michael Keymolen</Authors>
     <TargetFrameworks>netstandard1.6;net451</TargetFrameworks>
     <DefineConstants>$(DefineConstants);LIBLOG_PORTABLE</DefineConstants>

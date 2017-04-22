@@ -33,12 +33,17 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                 }
                 _tcpClient = new TcpClient();
                 // wait for connection
-                _tcpClient.ConnectAsync(Settings.IpAddress, Settings.Port).Wait();
+               
+                if (!_tcpClient.ConnectAsync(Settings.IpAddress, Settings.Port).Wait(TimeSpan.FromSeconds(5)))
+                {
+                    s_logger.Error($"Could not connect to {Settings?.IpAddress}:{Settings?.Port}");
+                    return false;
+                }
                 return _tcpClient.Connected;
             }
             catch (Exception)
             {
-               s_logger.Error($"Could not connect to {Settings?.IpAddress}:{Settings?.Port}");
+                s_logger.Error($"Could not connect to {Settings?.IpAddress}:{Settings?.Port}");
                 return false;
             }
             
@@ -150,7 +155,6 @@ namespace DavisVantage.WeatherReader.WeatherLinkIp
                 return false;
             }
         }
-
         private void ReadUntilAckByte(NetworkStream networkStream)
         {
             const int ACK = 6;
